@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fondos">
+<meta name="theme-color" content="#0d0f0e">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+<title>Calculadora Fondos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f0e;
+    --surface: #141714;
+    --border: #252925;
+    --accent: #b8f577;
+    --accent2: #7ec8e3;
+    --accent3: #f5c842;
+    --text: #e8ede8;
+    --muted: #6b7a6b;
+    --sp500: #b8f577;
+    --eu: #7ec8e3;
+    --em: #f5c842;
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: calc(var(--safe-top) + 36px) 20px calc(var(--safe-bottom) + 40px);
+    overflow-y: auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+    width: 100%;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Mode toggle */
+  .mode-toggle {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .mode-btn {
+    flex: 1;
+    padding: 11px 6px;
+    background: transparent;
+    border: none;
+    border-radius: 9px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mode-btn.active {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 16px;
+  }
+
+  .card-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* Input */
+  .input-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .currency-symbol {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--muted);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 16px 16px 46px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus { border-color: var(--accent); }
+
+  /* Quick amounts */
+  .quick-amounts {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .qa-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 13px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    active-color: var(--accent);
+  }
+
+  .qa-btn:active {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(0.96);
+  }
+
+  /* Results */
+  .results {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .fund-row {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .fund-row:nth-child(1) { animation-delay: 0.04s; }
+  .fund-row:nth-child(2) { animation-delay: 0.09s; }
+  .fund-row:nth-child(3) { animation-delay: 0.14s; }
+
+  .fund-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .fund-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fund-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .fund-name {
+    font-size: 0.68rem;
+    color: var(--text);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .fund-isin {
+    font-size: 0.56rem;
+    color: var(--muted);
+  }
+
+  .fund-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .fund-bar-wrap {
+    background: var(--bg);
+    border-radius: 4px;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  .fund-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0%;
+  }
+
+  .fund-pct {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .total-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .total-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--muted);
+  }
+
+  .empty {
+    text-align: center;
+    padding: 16px 0 6px;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+  }
+
+  /* Copy button */
+  .copy-btn {
+    width: 100%;
+    max-width: 500px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .copy-btn:active {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(0.98);
+  }
+
+  .hint {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.06em;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Reparto de <em>fondos</em></h1>
+  <p class="subtitle">MyInvestor · 70 / 20 / 10</p>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="setMode('aportacion')" id="btn-aportacion">💶 Aportación</button>
+  <button class="mode-btn" onclick="setMode('rebalanceo')" id="btn-rebalanceo">⚖️ Rebalanceo anual</button>
+</div>
+
+<div class="card">
+  <div class="card-label" id="card-label">Introduce el importe a aportar</div>
+
+  <div class="input-wrap">
+    <span class="currency-symbol">€</span>
+    <input type="number" id="amount" placeholder="0" min="0" inputmode="decimal" oninput="calculate()">
+  </div>
+
+  <div class="quick-amounts">
+    <button class="qa-btn" onclick="setAmount(100)">100€</button>
+    <button class="qa-btn" onclick="setAmount(500)">500€</button>
+    <button class="qa-btn" onclick="setAmount(850)">850€</button>
+    <button class="qa-btn" onclick="setAmount(1000)">1.000€</button>
+    <button class="qa-btn" onclick="setAmount(3000)">3.000€</button>
+    <button class="qa-btn" onclick="setAmount(5000)">5.000€</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="empty">Introduce un importe<br>para ver el reparto</div>
+  </div>
+
+  <hr class="divider" id="divider" style="display:none">
+  <div class="total-row" id="total-row" style="display:none">
+    <span class="total-label">Total</span>
+    <span class="total-amount" id="total-display">—</span>
+  </div>
+</div>
+
+<button class="copy-btn" onclick="copyResults()" id="copy-btn" style="display:none">
+  📋 Copiar para MyInvestor
+</button>
+
+<p class="hint" id="hint"></p>
+
+<script>
+const FUNDS = [
+  { name: "Vanguard U.S. 500", isin: "IE0032620787", short: "S&P 500",    pct: 70, color: "var(--sp500)" },
+  { name: "Vanguard European Stock Index", isin: "IE0007987708", short: "Europa",     pct: 20, color: "var(--eu)"   },
+  { name: "Vanguard Emerging Markets",     isin: "IE0031786696", short: "Emergentes", pct: 10, color: "var(--em)"   },
+];
+
+let mode = 'aportacion';
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-aportacion').classList.toggle('active', m === 'aportacion');
+  document.getElementById('btn-rebalanceo').classList.toggle('active', m === 'rebalanceo');
+  document.getElementById('card-label').textContent =
+    m === 'aportacion' ? 'Introduce el importe a aportar' : 'Introduce el valor total de la cartera';
+  calculate();
+}
+
+function setAmount(v) {
+  document.getElementById('amount').value = v;
+  calculate();
+}
+
+function fmt(n) {
+  return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+function calculate() {
+  const raw = parseFloat(document.getElementById('amount').value);
+  const amount = isNaN(raw) || raw <= 0 ? 0 : raw;
+  const resultsEl = document.getElementById('results');
+  const divider   = document.getElementById('divider');
+  const totalRow  = document.getElementById('total-row');
+  const copyBtn   = document.getElementById('copy-btn');
+  const hintEl    = document.getElementById('hint');
+
+  if (!amount) {
+    resultsEl.innerHTML = '<div class="empty">Introduce un importe<br>para ver el reparto</div>';
+    divider.style.display = totalRow.style.display = copyBtn.style.display = 'none';
+    hintEl.textContent = '';
+    return;
+  }
+
+  let html = '';
+  FUNDS.forEach((f, i) => {
+    const val = Math.round(amount * f.pct / 100 * 100) / 100;
+    html += `
+      <div class="fund-row">
+        <div class="fund-header">
+          <div class="fund-info">
+            <div class="fund-dot" style="background:${f.color}"></div>
+            <div>
+              <div class="fund-name">${f.name}</div>
+              <div class="fund-isin">${f.isin}</div>
+            </div>
+          </div>
+          <div class="fund-amount" style="color:${f.color}">${fmt(val)}</div>
+        </div>
+        <div class="fund-bar-wrap">
+          <div class="fund-bar" id="bar-${i}" style="background:${f.color}"></div>
+        </div>
+        <div class="fund-pct">${f.pct}%</div>
+      </div>`;
+  });
+
+  resultsEl.innerHTML = html;
+
+  requestAnimationFrame(() => {
+    FUNDS.forEach((f, i) => {
+      const bar = document.getElementById('bar-' + i);
+      if (bar) setTimeout(() => bar.style.width = f.pct + '%', 50 * i);
+    });
+  });
+
+  divider.style.display = 'block';
+  totalRow.style.display = 'flex';
+  copyBtn.style.display = 'block';
+  document.getElementById('total-display').textContent = fmt(amount);
+
+  hintEl.textContent = mode === 'aportacion'
+    ? 'Aportación mensual recomendada: 70€ · 20€ · 10€'
+    : 'Objetivo de rebalanceo según tu cartera actual';
+}
+
+function copyResults() {
+  const amount = parseFloat(document.getElementById('amount').value);
+  if (!amount) return;
+  const label = mode === 'aportacion' ? 'APORTACIÓN' : 'REBALANCEO';
+  let text = `📊 ${label} — ${amount.toLocaleString('es-ES')} €\n\n`;
+  FUNDS.forEach(f => {
+    const val = Math.round(amount * f.pct / 100 * 100) / 100;
+    text += `• ${f.short} (${f.isin}): ${val.toLocaleString('es-ES', {minimumFractionDigits: 2})} € (${f.pct}%)\n`;
+  });
+  text += `\nTotal: ${amount.toLocaleString('es-ES')} €`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copiado al portapapeles';
+    setTimeout(() => btn.textContent = '📋 Copiar para MyInvestor', 2200);
+  });
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
