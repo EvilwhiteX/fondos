@@ -18,20 +18,20 @@
     --surface2:  #f0f3f0;
     --border:    #e2e8e2;
     --border2:   #d0d8d0;
-    --green:     #16a34a;
-    --green-bg:  #dcfce7;
-    --green-txt: #15803d;
+    --bbva-blue: #004481;
+    --bbva-light: #e6f0f9;
+    --bbva-medium: #043263;
     --red:       #dc2626;
     --red-bg:    #fee2e2;
     --red-txt:   #b91c1c;
-    --sp500:     #1a6b3c;
+    --sp500:     #004481;
     --eu:        #1d4ed8;
     --em:        #b45309;
     --text:      #111c11;
     --text2:     #374937;
     --muted:     #6b7c6b;
     --muted2:    #9aaa9a;
-    --accent:    #1a6b3c;
+    --accent:    #004481;
     --safe-top:  env(safe-area-inset-top);
     --safe-bot:  env(safe-area-inset-bottom);
     --r:         18px;
@@ -55,7 +55,6 @@
     padding-right: 20px;
   }
 
-  /* ── HEADER ── */
   .header {
     display: flex;
     align-items: center;
@@ -93,7 +92,6 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* ── NAV TABS ── */
   .nav {
     display: flex;
     background: var(--surface);
@@ -117,15 +115,15 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    text-transform: uppercase;
   }
 
   .nav-btn.active {
     background: var(--accent);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(26,107,60,0.25);
+    box-shadow: 0 2px 8px rgba(0,68,129,0.25);
   }
 
-  /* ── PAGES ── */
   .page { display: none; }
   .page.active { display: block; animation: fadeUp 0.22s ease; }
 
@@ -134,7 +132,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── CARD ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -153,7 +150,6 @@
     margin-bottom: 16px;
   }
 
-  /* ── INPUT ── */
   .input-wrap { position: relative; margin-bottom: 16px; }
 
   .eur-sym {
@@ -182,16 +178,12 @@
     outline: none;
     transition: border-color 0.2s, background 0.2s;
     -webkit-appearance: none;
-    -moz-appearance: textfield;
   }
-  input::-webkit-inner-spin-button,
-  input::-webkit-outer-spin-button { -webkit-appearance: none; }
   input:focus {
     border-color: var(--accent);
     background: #fff;
   }
 
-  /* ── QUICK AMOUNTS ── */
   .quick {
     display: flex;
     gap: 8px;
@@ -218,13 +210,9 @@
     transform: scale(0.95);
   }
 
-  /* ── FUND ROWS ── */
   .fund-list { display: flex; flex-direction: column; gap: 18px; }
 
   .fund-row { animation: fadeUp 0.3s ease both; }
-  .fund-row:nth-child(1) { animation-delay: 0.03s; }
-  .fund-row:nth-child(2) { animation-delay: 0.08s; }
-  .fund-row:nth-child(3) { animation-delay: 0.13s; }
 
   .fund-top {
     display: flex;
@@ -285,7 +273,6 @@
     margin-top: 5px;
   }
 
-  /* ── DIVIDER & TOTAL ── */
   hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
   .total-row {
@@ -309,7 +296,6 @@
     color: var(--text2);
   }
 
-  /* ── COPY BTN ── */
   .copy-btn {
     width: 100%;
     background: var(--surface);
@@ -340,7 +326,6 @@
     line-height: 1.8;
   }
 
-  /* ── FOOTER ── */
   .footer {
     font-size: 0.68rem;
     font-weight: 500;
@@ -349,183 +334,10 @@
     margin-top: 12px;
     line-height: 1.7;
   }
-
-  /* ── PRICES PAGE ── */
-  .prices-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .prices-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .refresh-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 14px;
-    color: var(--accent);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: var(--shadow-sm);
-  }
-  .refresh-btn:active { background: var(--accent); color: #fff; }
-
-  .spin { display: inline-block; }
-  .spinning .spin { animation: rotar 0.9s linear infinite; }
-  @keyframes rotar { to { transform: rotate(360deg); } }
-
-  /* ── PRICE CARDS ── */
-  .price-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 20px 22px;
-    margin-bottom: 14px;
-    box-shadow: var(--shadow);
-    animation: fadeUp 0.3s ease both;
-  }
-  .price-card:nth-child(1) { animation-delay: 0.03s; }
-  .price-card:nth-child(2) { animation-delay: 0.08s; }
-  .price-card:nth-child(3) { animation-delay: 0.13s; }
-
-  .pc-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 16px;
-  }
-
-  .pc-left { flex: 1; padding-right: 12px; }
-
-  .pc-fund-header { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-
-  .pc-dot {
-    width: 11px; height: 11px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
-  }
-
-  .pc-name {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-
-  .pc-isin {
-    font-size: 0.63rem;
-    font-weight: 500;
-    color: var(--muted2);
-    margin-left: 21px;
-    letter-spacing: 0.02em;
-  }
-
-  .pc-badge {
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    font-weight: 700;
-    border-radius: 10px;
-    padding: 6px 12px;
-    white-space: nowrap;
-  }
-  .pc-badge.pos { background: var(--green-bg); color: var(--green-txt); }
-  .pc-badge.neg { background: var(--red-bg);   color: var(--red-txt);   }
-  .pc-badge.neu { background: var(--surface2);  color: var(--muted);     }
-
-  .pc-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
-
-  .pc-nav {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  .pc-loading {
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--muted2);
-    animation: pulse 1.3s ease-in-out infinite;
-    padding: 10px 0;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.35; }
-    50% { opacity: 1; }
-  }
-
-  .pc-right { text-align: right; }
-
-  .pc-change {
-    font-size: 0.82rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .pc-change.pos { color: var(--green-txt); }
-  .pc-change.neg { color: var(--red-txt); }
-  .pc-change.neu { color: var(--muted); }
-
-  .pc-date {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--muted2);
-  }
-
-  .pc-alloc {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .prices-note {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--muted2);
-    text-align: center;
-    margin-top: 4px;
-    line-height: 1.8;
-    padding: 0 6px;
-  }
-
-  .error-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 28px 20px;
-    text-align: center;
-    box-shadow: var(--shadow);
-  }
-
-  .error-box p {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .error-box .error-icon { font-size: 2rem; margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <h1>Mi cartera <span>indexada</span></h1>
@@ -534,14 +346,11 @@
   <div class="header-logo">MyInvestor</div>
 </div>
 
-<!-- NAV -->
 <div class="nav">
   <button class="nav-btn active" onclick="showPage('calc')" id="nav-calc">💶 Aportación</button>
   <button class="nav-btn" onclick="showPage('balance')" id="nav-balance">⚖️ Rebalanceo</button>
-  <button class="nav-btn" onclick="showPage('prices')" id="nav-prices">📈 Precios</button>
 </div>
 
-<!-- ═══ APORTACIÓN ═══ -->
 <div class="page active" id="page-calc">
   <div class="card">
     <div class="card-label">¿Cuánto vas a aportar?</div>
@@ -554,8 +363,6 @@
       <button class="q-btn" onclick="setAmt('calc',100)">100 €</button>
       <button class="q-btn" onclick="setAmt('calc',500)">500 €</button>
       <button class="q-btn" onclick="setAmt('calc',1000)">1.000 €</button>
-      <button class="q-btn" onclick="setAmt('calc',3000)">3.000 €</button>
-      <button class="q-btn" onclick="setAmt('calc',5000)">5.000 €</button>
     </div>
     <div class="fund-list" id="list-calc">
       <div class="empty">Introduce un importe<br>para ver el reparto</div>
@@ -572,7 +379,6 @@
   <p class="footer">App creada por Jesús Venegas · 2026</p>
 </div>
 
-<!-- ═══ REBALANCEO ═══ -->
 <div class="page" id="page-balance">
   <div class="card">
     <div class="card-label">Valor total de tu cartera</div>
@@ -585,7 +391,6 @@
       <button class="q-btn" onclick="setAmt('balance',5000)">5.000 €</button>
       <button class="q-btn" onclick="setAmt('balance',10000)">10.000 €</button>
       <button class="q-btn" onclick="setAmt('balance',25000)">25.000 €</button>
-      <button class="q-btn" onclick="setAmt('balance',50000)">50.000 €</button>
     </div>
     <div class="fund-list" id="list-balance">
       <div class="empty">Introduce el valor total<br>para ver el objetivo de rebalanceo</div>
@@ -602,35 +407,13 @@
   <p class="footer">Rebalancear una vez al año es suficiente · Jesús Venegas 2026</p>
 </div>
 
-<!-- ═══ PRECIOS ═══ -->
-<div class="page" id="page-prices">
-  <div class="prices-header">
-    <div class="prices-title">Último valor liquidativo</div>
-    <button class="refresh-btn" id="refresh-btn" onclick="loadPrices(true)">
-      <span class="spin">↻</span> Actualizar
-    </button>
-  </div>
-  <div id="prices-container">
-    <div class="error-box">
-      <div class="error-icon">📊</div>
-      <p>Toca <strong>Actualizar</strong> para cargar<br>el valor liquidativo de tus fondos</p>
-    </div>
-  </div>
-  <p class="prices-note">
-    Valor liquidativo del último cierre · Fuente: Financial Times<br>
-    Los fondos publican NAV una vez al día, no existe precio en tiempo real<br>
-    App creada por Jesús Venegas · 5 mayo 2026
-  </p>
-</div>
-
 <script>
 const FUNDS = [
-  { name: "Vanguard U.S. 500",            short: "S&P 500",    isin: "IE0032620787", pct: 70, color: "#1a6b3c", ft: "IE0032620787:EUR" },
-  { name: "Vanguard European Stock Index", short: "Europa",     isin: "IE0007987708", pct: 20, color: "#1d4ed8", ft: "IE0007987708:EUR" },
-  { name: "Vanguard Emerging Markets",     short: "Emergentes", isin: "IE0031786696", pct: 10, color: "#b45309", ft: "IE0031786696:EUR" },
+  { name: "Vanguard U.S. 500",            short: "S&P 500",    isin: "IE0032620787", pct: 70, color: "#004481" },
+  { name: "Vanguard European Stock Index", short: "Europa",     isin: "IE0007987708", pct: 20, color: "#1d4ed8" },
+  { name: "Vanguard Emerging Markets",     short: "Emergentes", isin: "IE0031786696", pct: 10, color: "#b45309" },
 ];
 
-// ── NAVIGATION ──
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -638,12 +421,10 @@ function showPage(id) {
   document.getElementById('nav-' + id).classList.add('active');
 }
 
-// ── FORMAT ──
 function fmt(n) {
   return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 }
 
-// ── CALCULATOR ──
 function setAmt(mode, val) {
   document.getElementById('amount-' + mode).value = val;
   calcReparto(mode);
@@ -705,12 +486,16 @@ function copiar(mode) {
   const amount = parseFloat(document.getElementById('amount-' + mode).value);
   if (!amount) return;
   const label = mode === 'calc' ? 'APORTACIÓN' : 'REBALANCEO';
-  let text = `📊 ${label} — ${amount.toLocaleString('es-ES')} €\n\n`;
+  let text = `📊 ${label} — ${amount.toLocaleString('es-ES')} €
+
+`;
   FUNDS.forEach(f => {
     const val = Math.round(amount * f.pct / 100 * 100) / 100;
-    text += `• ${f.short} (${f.isin}): ${val.toLocaleString('es-ES', {minimumFractionDigits: 2})} € (${f.pct}%)\n`;
+    text += `• ${f.short} (${f.isin}): ${val.toLocaleString('es-ES', {minimumFractionDigits: 2})} € (${f.pct}%)
+`;
   });
-  text += `\nTotal: ${amount.toLocaleString('es-ES')} €`;
+  text += `
+Total: ${amount.toLocaleString('es-ES')} €`;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('copy-' + mode);
     const orig = btn.textContent;
@@ -719,164 +504,6 @@ function copiar(mode) {
   });
 }
 
-// ── PRICES via Claude API ──
-let pricesCache = null;
-let lastFetch   = 0;
-
-function showPriceSkeletons() {
-  document.getElementById('prices-container').innerHTML = FUNDS.map(f => `
-    <div class="price-card">
-      <div class="pc-top">
-        <div class="pc-left">
-          <div class="pc-fund-header">
-            <div class="pc-dot" style="background:${f.color}"></div>
-            <div class="pc-name">${f.name}</div>
-          </div>
-          <div class="pc-isin">${f.isin}</div>
-        </div>
-        <div class="pc-badge neu">${f.pct}%</div>
-      </div>
-      <div class="pc-loading">Consultando datos...</div>
-    </div>`).join('');
-}
-
-async function loadPrices(force = false) {
-  const now = Date.now();
-  if (!force && pricesCache && now - lastFetch < 5 * 60 * 1000) {
-    renderPrices(pricesCache);
-    return;
-  }
-
-  const btn = document.getElementById('refresh-btn');
-  btn.classList.add('spinning');
-  btn.querySelector('.spin').textContent = '↻';
-
-  showPriceSkeletons();
-
-  try {
-    const today = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    const prompt = `Eres un asistente financiero. Necesito el valor liquidativo (NAV) más reciente disponible de estos tres fondos de inversión Vanguard comercializados en España. 
-    
-Fondos:
-1. Vanguard U.S. 500 Stock Index Fund Investor EUR Acc - ISIN: IE0032620787
-2. Vanguard European Stock Index Fund EUR Acc - ISIN: IE0007987708  
-3. Vanguard Emerging Markets Stock Index Fund EUR Acc - ISIN: IE0031786696
-
-Hoy es ${today}. Busca los valores liquidativos más recientes disponibles en fuentes como Financial Times Markets, Morningstar, o cualquier fuente financiera fiable.
-
-Devuelve ÚNICAMENTE un JSON válido con este formato exacto (sin texto adicional, sin markdown):
-{
-  "funds": [
-    {"isin": "IE0032620787", "nav": 72.34, "change_pct": 0.45, "date": "30/04/2026"},
-    {"isin": "IE0007987708", "nav": 45.12, "change_pct": -0.23, "date": "30/04/2026"},
-    {"isin": "IE0031786696", "nav": 38.90, "change_pct": 0.12, "date": "30/04/2026"}
-  ],
-  "source": "Financial Times"
-}
-
-Si no puedes obtener datos reales actualizados, devuelve null para nav y change_pct de ese fondo.`;
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        tools: [{ type: "web_search_20250305", name: "web_search" }],
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
-
-    if (!response.ok) throw new Error('API error ' + response.status);
-    const data = await response.json();
-
-    // Extract text from all content blocks
-    const fullText = data.content
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('');
-
-    // Try to parse JSON from response
-    const jsonMatch = fullText.match(/\{[\s\S]*"funds"[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in response');
-
-    const parsed = JSON.parse(jsonMatch[0]);
-    const results = FUNDS.map(f => {
-      const d = parsed.funds.find(x => x.isin === f.isin);
-      return {
-        fund: f,
-        nav: d?.nav || null,
-        change_pct: d?.change_pct ?? null,
-        date: d?.date || 'Último cierre',
-        source: parsed.source || 'Financial Times',
-        ok: d?.nav != null,
-      };
-    });
-
-    pricesCache = results;
-    lastFetch = Date.now();
-    renderPrices(results);
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById('prices-container').innerHTML = `
-      <div class="error-box">
-        <div class="error-icon">⚠️</div>
-        <p>No se pudieron cargar los datos.<br>Comprueba tu conexión e inténtalo de nuevo.</p>
-      </div>`;
-  }
-
-  btn.classList.remove('spinning');
-  btn.querySelector('.spin').textContent = '↻';
-}
-
-function renderPrices(results) {
-  const source = results[0]?.source || 'Financial Times';
-  const html = results.map(r => {
-    const f   = r.fund;
-    const pct = r.change_pct;
-    const isPos = pct !== null && pct > 0;
-    const isNeg = pct !== null && pct < 0;
-    const cls   = isPos ? 'pos' : isNeg ? 'neg' : 'neu';
-    const sign  = isPos ? '+' : '';
-    const arrow = isPos ? '▲' : isNeg ? '▼' : '—';
-
-    const navStr = r.nav
-      ? r.nav.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + ' €'
-      : 'No disponible';
-
-    const badgeStr = pct !== null
-      ? `${sign}${pct.toFixed(2)}%`
-      : `${f.pct}% cartera`;
-
-    return `
-      <div class="price-card">
-        <div class="pc-top">
-          <div class="pc-left">
-            <div class="pc-fund-header">
-              <div class="pc-dot" style="background:${f.color}"></div>
-              <div class="pc-name">${f.name}</div>
-            </div>
-            <div class="pc-isin">${f.isin}</div>
-          </div>
-          <div class="pc-badge ${cls}">${badgeStr}</div>
-        </div>
-        <div class="pc-bottom">
-          <div class="pc-nav">${navStr}</div>
-          <div class="pc-right">
-            ${pct !== null ? `<div class="pc-change ${cls}">${arrow} ${sign}${pct.toFixed(2)}%</div>` : ''}
-            <div class="pc-date">${r.date}</div>
-            <div class="pc-alloc">${f.pct}% de tu cartera</div>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-
-  document.getElementById('prices-container').innerHTML = html;
-}
-
-// Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/fondos/sw.js').catch(() => {});
