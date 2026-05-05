@@ -1,5 +1,5 @@
-const CACHE = 'fondos-v1';
-const ASSETS = ['/', '/index.html', '/manifest.json'];
+const CACHE = 'fondos-v2.1';
+const ASSETS = ['/fondos/', '/fondos/index.html', '/fondos/manifest.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
@@ -14,6 +14,8 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  if (e.request.url.includes('api.anthropic.com') ||
+      e.request.url.includes('fonts.googleapis.com')) return;
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
