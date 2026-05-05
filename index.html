@@ -20,7 +20,9 @@
     --border2:   #d0d8d0;
     --bbva-blue: #004481;
     --bbva-light: #e6f0f9;
-    --bbva-medium: #043263;
+    /* Eliminamos cualquier rastro de verde */
+    --pos-bg:    #e6f0f9; 
+    --pos-txt:   #004481;
     --red:       #dc2626;
     --red-bg:    #fee2e2;
     --red-txt:   #b91c1c;
@@ -31,7 +33,7 @@
     --text2:     #374937;
     --muted:     #6b7c6b;
     --muted2:    #9aaa9a;
-    --accent:    #004481;
+    --accent:    #004481; /* Azul BBVA */
     --safe-top:  env(safe-area-inset-top);
     --safe-bot:  env(safe-area-inset-bottom);
     --r:         18px;
@@ -115,7 +117,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    text-transform: uppercase;
+    text-transform: uppercase; /* Forzado mayúsculas */
   }
 
   .nav-btn.active {
@@ -334,6 +336,9 @@
     margin-top: 12px;
     line-height: 1.7;
   }
+
+  /* Forzar colores de estado sin verdes */
+  .pos { background: var(--pos-bg) !important; color: var(--pos-txt) !important; }
 </style>
 </head>
 <body>
