@@ -5,8 +5,8 @@
   "start_url": "/fondos/",
   "scope": "/fondos/",
   "display": "standalone",
-  "background_color": "#f5f7f5",
-  "theme_color": "#f5f7f5",
+  "background_color": "#f4f6f9",
+  "theme_color": "#f4f6f9",
   "orientation": "portrait",
   "icons": [
     {
